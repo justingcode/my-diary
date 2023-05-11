@@ -14,7 +14,7 @@ npm i docsify-cli -g
 
 安装成功后查看版本如下图：
 
-<img src="https://github.com/justingcode/my-diary/blob/main/docs/media/img/docsify1.png" alt="1683704528503"  />
+<img src="https://raw.githubusercontent.com/justingcode/my-diary/main/docs/media/img/docsify1.png" alt="1683704528503"  />
 
 ## 初始化项目
 
@@ -24,14 +24,14 @@ npm i docsify-cli -g
 docsify init ./docsify-demo
 ```
 
-<img src="https://github.com/justingcode/my-diary/blob/main/docs/media/img/docsify2.png" alt="1683705107675"  />
+<img src="https://raw.githubusercontent.com/justingcode/my-diary/main/docs/media/img/docsify2.png" alt="1683705107675"  />
     初始化成功后会看到如下图几个文件
 
 - index.html：`docsify`入口文件，引入样式、插件和设置配置都是在这个文件
 - README.md：主页渲染文件，如果你的`docsify`是个单页面的话，这个文件就是你编写笔记的文件
 - .nojekyll：阻止GitHub Pages 忽略下划线开头的文件（部分人可能会对这个文件感到疑惑，文章后面我会简单解释一下这个文件）
 
-<img src="https://github.com/justingcode/my-diary/blob/main/docs/media/img/docsify3.png" alt="1683705223377"  />
+<img src="https://raw.githubusercontent.com/justingcode/my-diary/main/docs/media/img/docsify3.png" alt="1683705223377"  />
 
 ## 预览项目
 
