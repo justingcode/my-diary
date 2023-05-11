@@ -1,2 +1,2 @@
-# front-end-note
-前端面试日记
+# my-diary
+个人随笔日记
