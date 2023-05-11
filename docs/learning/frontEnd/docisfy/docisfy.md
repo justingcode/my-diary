@@ -14,7 +14,7 @@ npm i docsify-cli -g
 
 安装成功后查看版本如下图：
 
-<img src="../../../media/img/docsify1.png" alt="1683704528503"  />
+<img src="https://raw.githubusercontent.com/justingcode/my-diary/main/docs/media/img/docsify1.png" alt="1683704528503"  />
 
 ## 初始化项目
 
