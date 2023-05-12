@@ -12,4 +12,4 @@
 
 &ensp;&ensp;既然设计如此，我们就不再纠结于此。但是如果只是单纯的单线程肯定是不满足实际需求的，所以`JavaScript`就设计了两种任务：**同步任务**和**异步任务**。而**异步任务**又细分成**宏任务**和**微任务**。他们的关系如下图所示：
 
-![eventLoop1](../../../media/eventLoop1.png)
+![eventLoop1](https://raw.githubusercontent.com/justingcode/my-diary/main/docs/media/img/eventLoop1.png)
