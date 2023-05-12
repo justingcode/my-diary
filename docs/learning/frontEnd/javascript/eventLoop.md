@@ -13,3 +13,22 @@
 &ensp;&ensp;既然设计如此，我们就不再纠结于此。但是如果只是单纯的单线程肯定是不满足实际需求的，所以`JavaScript`就设计了两种任务：**同步任务**和**异步任务**。而**异步任务**又细分成**宏任务**和**微任务**。他们的关系如下图所示：
 
 ![eventLoop1](https://raw.githubusercontent.com/justingcode/my-diary/main/docs/media/img/eventLoop1.png)
+
+&ensp;&ensp;接下来我们分别来研究下**同步任务**、**异步任务**、**宏任务**和**微任务**。
+
+## 同步任务
+
+&ensp;&ensp;同步任务的定义很简单:
+
+> 在主线程上排队执行的任务，只有前一个任务执行完毕，才能执行后一个任务；
+
+## 异步任务
+
+&ensp;&ensp;我们在代码中开启异步任务的方式有很多，常见的有`Promise`、`setTimeout`、`process.nextTick `，而异步任务的定义如下：
+
+> 不进入主线程、而进入”任务队列”的任务，当主线程中的任务运行完了，才会从”任务队列”取出异步任务放入主线程执行。
+
+&ensp;&ensp;而异步任务分为`macro-task`（宏任务）与`micro-task`（微任务），在最新标准中，它们被分别称为 task 与 jobs。
+&ensp;&ensp;macro-task 大概包括：`script`(整体代码), `setTimeout`, `setInterval`, `setImmediate`, `I/O`, `UI rendering`。
+
+micro-task 大概包括: `process.nextTick`, `Promise`, `Object.observe`(已废弃), `MutationObserver`(html5 新特性)
