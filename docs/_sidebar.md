@@ -1,6 +1,7 @@
 - 学习笔记
   - 前端学习
     - [docisfy 入门搭建](/learning/frontEnd/docisfy/docisfy.md)
+    - [JavaScript的事件执行机制](/learning/frontEnd/javascript/eventLoop.md)
 - 观后感
 - 随笔
 
