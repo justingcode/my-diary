@@ -1,12 +1,12 @@
-​	最近复习准备面试fork了几个八股文的笔记项目，但是知识太零碎了，就也想自己搭建一个在线博客记录整理一下。最开始首选的是gitbook,但是按步骤安装后创建项目出现了错误，谷歌之后发现是个遗留问题但是gitbook团队一直没有解决，虽然有迂回方法但是对其印象不太好。后来发现了docisfy，安装使用过程很顺利，暂时满足自己的需求，就记录下入门使用的教程。
+​ 最近复习准备面试 fork 了几个八股文的笔记项目，但是知识太零碎了，就也想自己搭建一个在线博客记录整理一下。最开始首选的是 gitbook,但是按步骤安装后创建项目出现了错误，谷歌之后发现是个遗留问题但是 gitbook 团队一直没有解决，虽然有迂回方法但是对其印象不太好。后来发现了 docisfy，安装使用过程很顺利，暂时满足自己的需求，就记录下入门使用的教程。
 
-## 安装node环境
+## 安装 node 环境
 
-​		首先需要安装node环境，我现在使用的是最新版的node(18.16.0),安装步骤这里我就不再赘述了，后续会考虑写个node安装的文章包括windows和mac环境（我对mac环境的安装也不太熟悉，刚好学习一下）。
+​ 首先需要安装 node 环境，我现在使用的是最新版的 node(18.16.0),安装步骤这里我就不再赘述了，后续会考虑写个 node 安装的文章包括 windows 和 mac 环境（我对 mac 环境的安装也不太熟悉，刚好学习一下）。
 
-## 安装docsify
+## 安装 docsify
 
-​		执行以下命令使用npm安装`docsify`，官方建议全局安装`docsify-cli`脚手架。
+​ 执行以下命令使用 npm 安装`docsify`，官方建议全局安装`docsify-cli`脚手架。
 
 ```
 npm i docsify-cli -g
@@ -14,28 +14,29 @@ npm i docsify-cli -g
 
 安装成功后查看版本如下图：
 
-<img src="https://raw.githubusercontent.com/justingcode/my-diary/main/docs/media/img/docsify1.png" alt="1683704528503"  />
+![docsify1](https://raw.githubusercontent.com/justingcode/my-diary/main/docs/media/img/docsify1.png)
 
 ## 初始化项目
 
-​		执行`init`命令来初始化项目,`docsify-cli`会自定帮你创建文件夹并创建初始化文件
+​ 执行`init`命令来初始化项目,`docsify-cli`会自定帮你创建文件夹并创建初始化文件
 
 ```
 docsify init ./docsify-demo
 ```
 
-<img src="https://raw.githubusercontent.com/justingcode/my-diary/main/docs/media/img/docsify2.png" alt="1683705107675"  />
+![docsify2](https://raw.githubusercontent.com/justingcode/my-diary/main/docs/media/img/docsify2.png)
+
     初始化成功后会看到如下图几个文件
 
 - index.html：`docsify`入口文件，引入样式、插件和设置配置都是在这个文件
 - README.md：主页渲染文件，如果你的`docsify`是个单页面的话，这个文件就是你编写笔记的文件
-- .nojekyll：阻止GitHub Pages 忽略下划线开头的文件（部分人可能会对这个文件感到疑惑，文章后面我会简单解释一下这个文件）
+- .nojekyll：阻止 GitHub Pages 忽略下划线开头的文件（部分人可能会对这个文件感到疑惑，文章后面我会简单解释一下这个文件）
 
-<img src="https://raw.githubusercontent.com/justingcode/my-diary/main/docs/media/img/docsify3.png" alt="1683705223377"  />
+![docsify3](https://raw.githubusercontent.com/justingcode/my-diary/main/docs/media/img/docsify3.png)
 
 ## 预览项目
 
- 通过运行 `docsify serve` 启动一个本地服务器，可以方便地实时预览效果。默认访问地址 [http://localhost:3000](http://localhost:3000/) 。 
+通过运行 `docsify serve` 启动一个本地服务器，可以方便地实时预览效果。默认访问地址 `http://localhost:3000` 。
 
 ```
 docsify serve docs
@@ -43,63 +44,71 @@ docsify serve docs
 
 ## 基础配置项
 
-上面说到我们的配置项和文件的引用都是在index.html完成的，下面是我的项目配置文件，涵盖了我当前使用到的功能，后续如果有使用新的功能我也会及时更新下面的代码
+上面说到我们的配置项和文件的引用都是在 index.html 完成的，下面是我的项目配置文件，涵盖了我当前使用到的功能，后续如果有使用新的功能我也会及时更新下面的代码
 
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Document</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="description" content="Description">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.min.css" />
-</head>
-<body>
-  <div id="app"></div>
-  <script>
-    window.$docsify = {
-      repo: 'https://github.com/docsifyjs/docsify/',// 仓库地址，点击右上角的Github章鱼猫头像会跳转到此地址
-      loadNavbar:'navbar.md',//默认加载 _navbar.md 作为顶部导航栏
-      loadSidebar:true,//默认加载 _sidebar.md 作为侧边栏  使用折叠目录插件必须使用默认侧边栏
-      autoHeader: true,
-      coverpage: 'cover.md',  // 自定义文件名
-      sidebarDisplayLevel: 1,//默认折叠的层级
-      auto2top: true,//切换页面后是否自动跳转到页面顶部。
-      mergeNavbar: true,// 小屏设备下合并导航栏到侧边栏
-      search:{
-        paths:'auto',
-        placeholder:'搜索',
-        noData:'nothing',
-        depth:3
-      },
-      alias: {
-      '/.*/_sidebar.md': '/_sidebar.md',
-      },
-    }
-  </script>
-  <!-- Docsify v4 -->
-  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
-  <!-- emoji表情支持 -->
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/emoji.min.js"></script>
-  <!-- 图片放大缩小支持 -->
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
-  <!-- 搜索插件 -->
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
-  <!--在所有的代码块上添加一个简单的Click to copy按钮来允许用户从你的文档中轻易地复制代码-->
-  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
-  <!-- 目录支持折叠插件 -->
-  <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="description" content="Description" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0"
+    />
+    <link
+      rel="stylesheet"
+      href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css"
+    />
+    <link
+      rel="stylesheet"
+      href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.min.css"
+    />
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+      window.$docsify = {
+        repo: "https://github.com/docsifyjs/docsify/", // 仓库地址，点击右上角的Github章鱼猫头像会跳转到此地址
+        loadNavbar: "navbar.md", //默认加载 _navbar.md 作为顶部导航栏
+        loadSidebar: true, //默认加载 _sidebar.md 作为侧边栏  使用折叠目录插件必须使用默认侧边栏
+        autoHeader: true,
+        coverpage: "cover.md", // 自定义文件名
+        sidebarDisplayLevel: 1, //默认折叠的层级
+        auto2top: true, //切换页面后是否自动跳转到页面顶部。
+        mergeNavbar: true, // 小屏设备下合并导航栏到侧边栏
+        search: {
+          paths: "auto",
+          placeholder: "搜索",
+          noData: "nothing",
+          depth: 3,
+        },
+        alias: {
+          "/.*/_sidebar.md": "/_sidebar.md",
+        },
+      };
+    </script>
+    <!-- Docsify v4 -->
+    <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+    <!-- emoji表情支持 -->
+    <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/emoji.min.js"></script>
+    <!-- 图片放大缩小支持 -->
+    <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
+    <!-- 搜索插件 -->
+    <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+    <!--在所有的代码块上添加一个简单的Click to copy按钮来允许用户从你的文档中轻易地复制代码-->
+    <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
+    <!-- 目录支持折叠插件 -->
+    <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
+  </body>
 </html>
-
 ```
 
 ## 封面设置
 
- 封面的生成同样是从 markdown 文件渲染来的。开启渲染封面功能后在文档根目录创建 `_coverpage.md` 文件。渲染效果如本文档。 
+封面的生成同样是从 markdown 文件渲染来的。开启渲染封面功能后在文档根目录创建 `_coverpage.md` 文件。渲染效果如本文档。
 
 ```html
 <!-- index.html -->
@@ -130,12 +139,11 @@ docsify serve docs
 
 [GitHub](https://github.com/docsifyjs/docsify/)
 [Get Started](/README.md)
-
 ```
 
 ## 侧边栏配置
 
- 为了获得侧边栏，您需要创建自己的_sidebar.md，你也可以自定义加载的文件名。默认情况下侧边栏会通过 Markdown 文件自动生成，效果如当前的文档的侧边栏。 （这里的意思是如果你不设置sidebar文件的话，docsify会依据你的markdown文件的标题来生成侧边栏，这个适用于单页面的项目。如果你想创建一个多级目录的docsify项目的话，建议设置自定义侧边栏）
+为了获得侧边栏，您需要创建自己的\_sidebar.md，你也可以自定义加载的文件名。默认情况下侧边栏会通过 Markdown 文件自动生成，效果如当前的文档的侧边栏。 （这里的意思是如果你不设置 sidebar 文件的话，docsify 会依据你的 markdown 文件的标题来生成侧边栏，这个适用于单页面的项目。如果你想创建一个多级目录的 docsify 项目的话，建议设置自定义侧边栏）
 
 ```
 <!-- index.html -->
@@ -170,16 +178,16 @@ docsify serve docs
 - [设计模式](/general/design-pattern/README.md)
 - 网络
   - [协议模型](/general/network/protocol-model.md)
-  - [TCP/IP](/general/network/tcp-ip.md) 
+  - [TCP/IP](/general/network/tcp-ip.md)
 ```
 
-页面效果如下图（折叠效果是加入插件效果，如果你和我的index.html文件相同侧边栏目录也会有折叠箭头的效果）
+页面效果如下图（折叠效果是加入插件效果，如果你和我的 index.html 文件相同侧边栏目录也会有折叠箭头的效果）
 
 <img src="../../../media/img/docsify4.png" alt="1683710255956"  />
 
 ## 导航设置
 
-  加载自定义导航栏， 设置为 `true` 后会加载 `_navbar.md` 文件，也可以自定义加载的文件名。 
+加载自定义导航栏， 设置为 `true` 后会加载 `_navbar.md` 文件，也可以自定义加载的文件名。
 
 ```javascript
 window.$docsify = {
@@ -187,7 +195,6 @@ window.$docsify = {
   loadNavbar: true,
 
   // 加载 nav.md
-  loadNavbar: 'nav.md',
+  loadNavbar: "nav.md",
 };
 ```
-
