@@ -142,3 +142,70 @@ console.log("我是同步任务2");
 &ensp;&ensp;以上的流程总结来说就是：**js 引擎线程**只会执行**执行栈**里的事件，当事件执行完毕就会想**任务队列**进行轮询，读取到事件就放入到**执行栈**中执行，这样重复的操作就是**事件循环（Event Loop）**
 
 ![eventLoop2](https://raw.githubusercontent.com/justingcode/my-diary/main/docs/media/img/eventLoop2.png)
+
+## 宏任务（macrotask）
+
+&ensp;&ensp;`macrotask`也被成为`task`,我们可以将每次执行栈中的执行的代码当作一个**宏任务**（也包括从**任务队列**中读取到的回调放入到执行栈中）。每个**宏任务**都会从头到尾执行完毕，中间不会执行其他操作。
+
+> **宏任务**和**GUI 渲染**会交替执行。
+
+常见的**宏任务**：
+
+- 主代码块
+- setTimeout
+- setInterval
+- setImmediate ()-Node
+- requestAnimationFrame ()-浏览器
+
+## 微任务（microtask）
+
+&ensp;&ensp;`microtask`也被成为`jobs`。上面我们说到**宏任务**执行完后会执行**GUI 渲染**，但其实在**宏任务**和**GUI 渲染**之间，还会将**宏任务**执行期间产生的所有**微任务**执行完。
+常见的**微任务**：
+
+- process.nextTick ()-Node
+- Promise.then()
+- catch
+- finally
+- Object.observe
+- MutationObserver
+
+&ensp;&ensp;所以最后得到的执行顺序是这样的：**宏任务>>微任务>>GUI 渲染>>宏任务...**。下面举几个例子来演示一下：
+
+```javascript
+document.body.style = "background:black";
+document.body.style = "background:red";
+document.body.style = "background:blue";
+document.body.style = "background:pink";
+```
+
+&ensp;&ensp;直接说现象，页面会直接渲染成粉色。上面都是四行代码同属于一个**宏任务**中，并且没有**微任务**，所以**宏任务**之行结束后，直接执行渲染。而渲染机制会对其进行优化合并，所以视觉效果就是页面直接渲染成粉色。
+
+```javascript
+document.body.style = "background:blue";
+setTimeout(() => {
+  document.body.style = "background:black";
+}, 200);
+```
+
+&ensp;&ensp;页面先渲染成蓝色，然后变成黑色背景。现象很好推测，但是其中的还是值得研究的地方的--为什么中间会渲染一次蓝色呢？因为上面的代码其实是两个宏任务，代码执行到第二行的时候遇到`setTimeout`，**定时触发器线程**会接管回调在 200ms 后将其回调放入**任务队列**。然后**宏任务**执行完成，进行**gui 渲染**，页面渲染成蓝色。然后**JS 执行线程**读取**任务队列**获取到任务放入执行栈，开启一个新的**宏任务**，执行完毕后再次进行渲染，将页面渲染成黑色。
+
+```javascript
+document.body.style = "background:blue";
+console.log(1);
+Promise.resolve().then(() => {
+  console.log(2);
+  document.body.style = "background:pink";
+});
+console.log(3);
+```
+
+&ensp;&ensp;再看第三段代码，表现如下
+
+- 控制台打印 1
+- 控制台打印 3
+- 控制台打印 2
+- 页面渲染为粉色
+
+&ensp;&ensp;因为上面的代码为一个**宏任务**：背景色设置为蓝色，打印 1，打印 3；一个**微任务**：打印 2，页面背景设置为粉色；这样安装上面说到的执行顺序，最后经过渲染优化合并，页面直接渲染为粉色就不会出现蓝色的现象。
+
+## 宏任务和微任务的差异
