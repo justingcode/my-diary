@@ -1,7 +1,9 @@
 - 学习笔记
   - 前端学习
     - [docisfy 入门搭建](/learning/frontEnd/docisfy/docisfy.md)
-    - [JavaScript的事件执行机制](/learning/frontEnd/javascript/eventLoop.md)
+    - [JavaScript 的事件执行机制](/learning/frontEnd/javascript/eventLoop.md)
+  - golang
+    - [Go 的简介和入门准备](/learning/go/01.md)
 - 观后感
 - 随笔
 
