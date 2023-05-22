@@ -218,3 +218,112 @@ console.log(3);
   ## 总结
   &ensp;&ensp;最后还是回到开篇的图，我们用语言描述下那种图的流程：
   &ensp;&ensp;首先，整体`script`作为**第一个宏任务**开始执行，此时会把所有的代码分为**同步任务**和**异步任务**。同步任务会直接进入**主线程**执行,异步任务会再分为**宏任务**和**微任务**。宏任务会进入到`Event Table`中，并在里面注册回调函数，每当指定的事件完成时，`Event Table`会将这个函数移动到`Event Queue`中；微任务也会执行相同的操作，但它是维护自己独立的`Event Table`和`Event Queue`。当主线程内的任务执行完毕后，会检查**微任务**的`Event Queue`,如果有任务就全部执行，如果没有就执行下一个宏任务。如此往复循环就是`Event Loop`。
+
+## Promise,async/await 函数
+
+&ensp;&ensp;`new Promise(()=>{}).then()`,前面的`new Promise()`这一部分是一个构造函数，这是一个同步任务，而后面的`.then()`才是一个异步微任务。我们可以看下面这段代码来直观感受一下
+
+```javascript
+new Promise((resolve) => {
+  console.log(1);
+  resolve();
+}).then(() => {
+  console.log(2);
+});
+console.log(3);
+```
+
+&ensp;&ensp;上面的代码输出`1 2 3`
+&ensp;&ensp;我们知道`async/await`就是`Promise`的语法糖，而`Promise`就是微任务的一种，所以使用`await`关键字与`Promise.then`效果相似
+
+```javascript
+setTimeout(() => console.log(4));
+
+async function test() {
+  console.log(1);
+  await Promise.resolve();
+  console.log(3);
+}
+
+test();
+
+console.log(2);
+```
+
+&ensp;&ensp;上面的代码输出`1 2 3 4`。我们可以这样理解，`await`之前的代码，相当于与`new Promise`一级的同步代码，`await`之后的代码相当于`Promise.then`内的异步代码
+
+## 练习习题
+
+```javascript
+function test() {
+  console.log(1);
+  setTimeout(function () {
+    // macro1
+    console.log(2);
+  }, 1000);
+}
+
+test();
+
+setTimeout(function () {
+  // macro2
+  console.log(3);
+});
+
+new Promise(function (resolve) {
+  console.log(4);
+  setTimeout(function () {
+    // macro3
+    console.log(5);
+  }, 100);
+  resolve();
+}).then(function () {
+  //micro1
+  setTimeout(function () {
+    // macro4
+    console.log(6);
+  }, 0);
+  console.log(7);
+});
+
+console.log(8);
+```
+
+&ensp;&ensp;上面的代码输出什么呢？我们来逐行分析一下。
+
+- js 按顺序从上往下执行；
+- 执行到`test()`,该方法为**同步方法**，直接执行`console.log(1)`,打印 1；
+- test 方法里面的`setTimeout`为**宏任务**，回调记作`macro1`放入宏任务队列；
+- 又遇到一个`setTimeout`,依然是**宏任务**，回调记作`macro2`放入宏任务队列；
+- 然后是`new Promise`,它是一个**同步任务**，直接执行` console.log(4)`,打印 4；
+- `new Promise`内部的`setTimeout`作为**宏任务**我们还是把其回调记作`macro3`放入宏任务队列；
+- `Promise.then`是**微任务**，记作`micro1`直接放入微任务队列中；
+- `console.log(8)`是**同步任务**，直接执行，打印 8；
+- 此时主线程任务执行完毕，检查微任务队列；
+- 开始执行**微任务**，执行`micro1`,遇到`setTimeout`,记作`macro4`，放入宏任务队列；
+- 继续执行`micro1`，执行同步任务`console.log(7)`,打印 7；
+- 微任务执行完毕，第一次循环结束
+- 检查宏任务队列，里面存有是个定时器宏任务`macro1 macro2 macro3 macro4`,按定时器延迟时间得到执行顺序，即`Event Queue：macro2、macro4、macro3、macro1`,依次拿出放入执行栈末尾执行（**注：浏览器 event loop 的 MacroTask queue,及时宏任务队列在每次循环中只会读取一个任务**）
+- 执行`macro2`,打印 3，检查没有微任务，第二次`event loop`结束
+- 执行`macro4`,打印 6，检查没有微任务，第三次`event loop`结束
+- 执行`macro3`,打印 5，检查没有微任务，第四次`event loop`结束
+- 执行`macro1`,打印 2，检查没有微任务，第五次`event loop`结束
+- 最终输出结果 `1 4 8 7 3 6 5 2`
+
+## 参考文献
+
+> [「硬核 JS」一次搞懂 JS 运行机制](https://juejin.cn/post/6844904050543034376#heading-27)
+
+> [一次搞懂-JS 事件循环之宏任务和微任务](https://juejin.cn/post/6873424205791100942)
+
+> [进程、线程、同步、异步、任务队列、微任务、宏任务](https://juejin.cn/post/7040729389918584840)
+
+> [【JS】深入理解事件循环,这一篇就够了!(必看)](https://zhuanlan.zhihu.com/p/87684858)
+
+> [console.log 是异步流？感觉自己貌似踩了个坑](https://segmentfault.com/q/1010000011091088)
+
+> [JS 中，script(整体代码)是怎么入栈的？](https://segmentfault.com/q/1010000011020960)
+
+> [javascript 中 script 整体代码属于宏任务怎么理解呢？](https://segmentfault.com/q/1010000023206213)
+
+> [前端基础进阶（十四）：深入核心，详解事件循环机制](https://www.jianshu.com/p/12b9f73c5a4f)
