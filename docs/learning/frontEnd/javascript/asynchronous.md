@@ -323,11 +323,10 @@ readAll(); // 2.txt 3.txt
     2. 更广的适用性，`await`命令后面可以跟`Promise`对象，也可以是原始类型的值（数字、字符串和布尔值，但此时等同于同步操作）
     3. 更好的语义性，`async` 表示函数里有异步操作，`await` 表示紧跟在后面的表达式需要等待结果。
 
-    <!-- ## 参考文献
-
 > [JS 异步编程六种方案](https://juejin.cn/post/6844903760280420366#heading-2)
 
 > [什么是回调函数？](https://www.freecodecamp.org/chinese/news/javascript-callback-functions/)
 
-> [ECMAScript 6 入门 Promise 对象](https://es6.ruanyifeng.com/#docs/promise) > [Generators 深度解读](https://juejin.cn/post/6844903517979688967)
-> -->
+> [ECMAScript 6 入门 Promise 对象](https://es6.ruanyifeng.com/#docs/promise)
+
+> [Generators 深度解读](https://juejin.cn/post/6844903517979688967)

@@ -3,6 +3,7 @@
     - [docisfy 入门搭建](/learning/frontEnd/docisfy/docisfy.md)
     - [JavaScript 的事件执行机制](/learning/frontEnd/javascript/eventLoop.md)
     - [JavaScript 的异步编程](/learning/frontEnd/javascript/asynchronous.md)
+    - [JavaScript 的异步编程](/learning/frontEnd/javascript/asynchronous.md)
   - golang
     - [Go 的简介和入门准备](/learning/go/01.md)
 - 观后感
