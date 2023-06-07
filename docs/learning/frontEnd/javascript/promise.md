@@ -1,4 +1,4 @@
-# 手撕 Promise 面试题和源码
+# 一次搞懂 Promise(一)
 
 ## Promise 的含义
 
@@ -495,3 +495,5 @@ Promise.try(() => database.users.get({id: userId}))
 ```
 
 上面的`database.users.get({id: userId})`返回一个`Promise`,它的可能会返回同步错误，如果不使用`Promise.try`我们就需要使用`try...catch`去处理。而事实上，Promise.try 就是模拟 try 代码块，就像 promise.catch 模拟的是 catch 代码块。
+
+> [ECMAScript 6 入门 Promise 对象](https://es6.ruanyifeng.com/#docs/promise)
