@@ -4,6 +4,9 @@
     - [JavaScript 的事件执行机制](/learning/frontEnd/javascript/eventLoop.md)
     - [JavaScript 的异步编程](/learning/frontEnd/javascript/asynchronous.md)
     - [一次搞懂 Promise(一)](/learning/frontEnd/javascript/promise.md)
+    - vue
+      - [vue 和 react 的核心--`Virtual Dom `](/learning/frontEnd/vue/virtualDom.md)
+      - [图解 diff 算法](/learning/frontEnd/vue/diff.md)
   - golang
     - [Go 的简介和入门准备](/learning/go/01.md)
 - 观后感
